@@ -1,21 +1,31 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import * as React from 'react';
+import {connect} from 'react-redux';
+import {Route} from 'react-router';
+import { asyncComponent } from 'react-async-component';
+import { BrowserRouter } from 'react-router-dom'
+
 import './App.css';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
-  }
-}
+const Page1 = asyncComponent({
+    resolve: () => import('./pages/page1')
+});
+
+let App = (props) => (
+  <BrowserRouter>
+  <div>
+    <Route exact path="/page1" component={Page1} />
+  </div>
+  </BrowserRouter>
+);
+
+const mapStateToProps = (state, ownProps) => ({});
+
+const mapDispatchToProps = (dispatch, ownProps) => ({});
+
+App = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
+
 
 export default App;
