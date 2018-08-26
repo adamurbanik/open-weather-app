@@ -5,7 +5,7 @@ export const getForecast = (state = {}) => {
   return (state.forecast) ? state.forecast : {};
 };
 
-export  default (state = [], action = {}) => { console.log('action', action);
+export  default (state = [], action = {}) => {
   switch (action.type) {
 
     case actionTypes.SET_FORECAST_ACTION:
