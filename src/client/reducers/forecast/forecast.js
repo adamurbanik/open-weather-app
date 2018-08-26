@@ -1,10 +1,21 @@
 import actionTypes from 'client/utils/action-types';
+import errorMessage from 'client/pages/error/';
 
-export  default (state = [], {type, data}) => {
-  switch (type) {
+export const getForecast = (state = {}) => {
+  return (state.forecast) ? state.forecast : {};
+};
 
-    case actionTypes.ERROR_FETCHING_FORECAST:
-      return data;
+export  default (state = [], action = {}) => { console.log('action', action);
+  switch (action.type) {
+
+    case actionTypes.SET_FORECAST_ACTION:
+      return action.data;
+
+    case actionTypes.REQUEST_FORECAST_ERROR:
+      return {
+        loading: false,
+        error: errorMessage(action.error)
+      };
 
     default:
       return state;

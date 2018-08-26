@@ -8,7 +8,7 @@ import {
 import universalLoader from 'server/middleware/universal';
 import createAppStore from 'client/store';
 
-import WeatherContainer from 'client/pages/weather-container';
+import WeatherContainer from 'client/pages/containers/weather-container';
 import getForecast from 'client/actions/forecast-actions';
 
 export const resolve = (title, store, history, req, res, next) => {

@@ -7,7 +7,7 @@ import { BrowserRouter } from 'react-router-dom'
 import './App.css';
 
 const Page1 = asyncComponent({
-    resolve: () => import('client/pages/weather-container')
+    resolve: () => import('client/pages/containers/weather-container')
 });
 
 let App = (props) => (

@@ -18,9 +18,6 @@ export default (cityName = 'london') => {
       .then(({ body }) => dispatch(setForecast(body)))
       .catch(err => {
 
-        // @TODO
-        // log err somehow
-
         const error = "REQUEST_FORECAST_ERROR";
 
         dispatch(errorFetchingForecast(error));

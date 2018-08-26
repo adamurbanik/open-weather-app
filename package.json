@@ -21,7 +21,7 @@
     "redux-thunk": "2.3.0",
     "serialize-javascript": "1.5.0",
     "styled-jsx": "3.0.2",
-    "superagent": "^3.8.3"
+    "superagent": "3.8.3"
   },
   "scripts": {
     "start": "NODE_PATH=src/ react-scripts start",
@@ -34,8 +34,10 @@
   },
   "devDependencies": {
     "babel-cli": "6.26.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-es2017": "6.24.1",
     "babel-preset-latest": "6.24.1",
+    "babel-register": "6.26.0",
     "eslint": "5.4.0"
   },
   "babel": {
@@ -43,6 +45,7 @@
       "latest",
       "react",
       "es2017"
-    ]
+    ],
+    "plugins": ["transform-object-rest-spread"]
   }
 }
