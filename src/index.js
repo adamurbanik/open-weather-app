@@ -4,10 +4,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 
-import './index.css';
-import App from './App';
-import {unregister} from './registerServiceWorker';
-import createAppStore from './store';
+import index from 'client/index.css';
+import App from 'client/App';
+import { unregister } from 'client/registerServiceWorker';
+import createAppStore from 'client/store';
 
 const rehydrateState = window.ASYNC_COMPONENTS_STATE;
 

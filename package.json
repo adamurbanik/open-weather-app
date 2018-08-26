@@ -3,25 +3,46 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "app-module-path": "2.2.0",
+    "body-parser": "1.18.3",
+    "express": "4.16.3",
+    "path": "0.12.7",
     "react": "16.4.2",
     "react-async-bootstrapper": "2.1.1",
-    "react-async-component": "^2.0.0",
+    "react-async-component": "2.0.0",
     "react-dom": "16.4.2",
+    "react-helmet": "5.2.0",
     "react-redux": "5.0.7",
     "react-router": "4.3.1",
-    "react-router-dom": "^4.3.1",
-    "react-router-redux": "^4.0.8",
+    "react-router-dom": "4.3.1",
+    "react-router-redux": "4.0.8",
     "react-scripts": "1.1.5",
     "redux": "4.0.0",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "2.3.0",
+    "serialize-javascript": "1.5.0",
+    "styled-jsx": "3.0.2",
+    "superagent": "^3.8.3"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "start": "NODE_PATH=src/ react-scripts start",
+    "build": "babel src -d dist",
+    "test": "NODE_PATH=src/ react-scripts test --env=jsdom",
+    "eject": "NODE_PATH=src/ react-scripts eject",
+    "proxy": "http://localhost:8080",
+    "babel-node": "babel-node --presets=latest",
+    "start-babel": "NODE_PATH=src/ nodemon --exec npm run babel-node -- ./src/server/server.js"
   },
   "devDependencies": {
+    "babel-cli": "6.26.0",
+    "babel-preset-es2017": "6.24.1",
+    "babel-preset-latest": "6.24.1",
     "eslint": "5.4.0"
+  },
+  "babel": {
+    "presets": [
+      "latest",
+      "react",
+      "es2017"
+    ]
   }
 }

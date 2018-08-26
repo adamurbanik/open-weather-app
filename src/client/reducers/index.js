@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import forecast from './forecast/forecast'
+import forecast from 'client/reducers/forecast/forecast'
 
 export default combineReducers({
   forecast
