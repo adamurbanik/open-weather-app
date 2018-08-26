@@ -7,13 +7,13 @@ import { BrowserRouter } from 'react-router-dom'
 import './App.css';
 
 const Page1 = asyncComponent({
-    resolve: () => import('./pages/weather-container')
+    resolve: () => import('client/pages/weather-container')
 });
 
 let App = (props) => (
   <BrowserRouter>
   <div>
-    <Route exact path="/page1" component={Page1} />
+    <Route exact path="/weather/forecast" component={Page1} />
   </div>
   </BrowserRouter>
 );

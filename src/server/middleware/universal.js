@@ -28,9 +28,7 @@ const universalLoader = (routeMarkup, asyncContext, req, res) => {
   const filePath = path.resolve(__dirname, '../index.html');
 
   fs.readFile(filePath, 'utf8', (err, htmlData) => {
-    console.log('err::', err);
     if (err) {
-      console.error('Read error', err);
       return res.status(404).end();
     }
 

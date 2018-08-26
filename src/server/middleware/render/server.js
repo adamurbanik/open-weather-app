@@ -11,11 +11,9 @@ import createAppStore from 'client/store';
 import WeatherContainer from 'client/pages/weather-container';
 import getForecast from 'client/actions/forecast-actions';
 
-export const resolve = (title, store, history, req, res, next) => { console.log('resolve::')
+export const resolve = (title, store, history, req, res, next) => {
   try {
     const asyncContext = createAsyncContext();
-
-    console.log('render weather container');
 
     const routeMarkup = (
       <AsyncComponentProvider asyncContext={asyncContext}>
