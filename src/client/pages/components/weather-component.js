@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import errorMessage from 'client/pages/error';
 
 export class WeatherComponent extends Component {
 
@@ -7,17 +8,51 @@ export class WeatherComponent extends Component {
     super(props);
 
     this.populateHtmlWithData = this.populateHtmlWithData.bind(this);
+
+    this.handleLoad = this.handleLoad.bind(this);
+    this.handleLoadResolve = this.handleLoadResolve.bind(this);
+    this.handleLoadReject = this.handleLoadReject.bind(this);
   }
 
   componentWillMount() {
 
     const {
-      forecast,
+      requestForecastOnClient,
+      forecast
     } = this.props;
+
+    console.log('forecast', forecast);
+
+    // this.handleLoad([
+    //   requestForecastOnClient()
+    // ]);
 
     if (forecast) {
       this.display = this.populateHtmlWithData(forecast);
     }
+  }
+
+  handleLoad(promises = [], handleLoadRejectCb) {
+    return Promise.all(promises)
+      .then(this.handleLoadResolve, (handleLoadRejectCb && (() => {
+        return handleLoadRejectCb()
+          .then(this.handleLoadResolve, this.handleLoadReject);
+      }) || this.handleLoadReject));
+  }
+
+  handleLoadResolve(data) {
+    this.setState({
+      loading: false
+    });
+
+    return data;
+  }
+
+  handleLoadReject() {
+    this.setState({
+      loading: false,
+      error: errorMessage()
+    });
   }
 
   populateHtmlWithData(forecast) {

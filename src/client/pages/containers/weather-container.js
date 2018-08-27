@@ -8,7 +8,7 @@ const mapStateToProps = (state) => ({
   forecast: getForecast(state)
 });
 
-const mapDispatchToProps = (dispatch) => ({});
+const mapDispatchToProps = (dispatch) => {};
 
 export const WeatherContainer = connect(
   mapStateToProps,

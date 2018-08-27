@@ -11,7 +11,7 @@ export const errorFetchingForecast = err => ({
   type: actionTypes.ERROR_FETCHING_FORECAST
 });
 
-export default (cityName = 'london') => {
+export const requestForecast = (cityName = 'london') => {
   return dispatch => {
 
     return restClient.get(`${config.OPEN_WEATHER_MAP_HOST}/data/2.5/weather?q=${cityName}&appid=${config.APPID}`)
@@ -24,6 +24,5 @@ export default (cityName = 'london') => {
 
         return Promise.reject();
       });
-
   }
-}
+};

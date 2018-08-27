@@ -9,7 +9,7 @@ import universalLoader from 'server/middleware/universal';
 import createAppStore from 'client/store';
 
 import WeatherContainer from 'client/pages/containers/weather-container';
-import getForecast from 'client/actions/forecast-actions';
+import { requestForecast } from 'client/actions/forecast-actions';
 
 export const resolve = (title, store, history, req, res, next) => {
   try {
@@ -33,7 +33,7 @@ const locateResource = (title, req, res, next) => {
   const { store, history } = createAppStore(req.path);
 
   store
-    .dispatch(getForecast())
+    .dispatch(requestForecast())
     .then(() => resolve(title, store, history, req, res, next))
     .catch(() => resolve(title, store, history, req, res, next));
 };
