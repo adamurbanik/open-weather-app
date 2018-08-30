@@ -11,9 +11,12 @@ export class WeatherComponent extends Component {
     this.handleLoad = this.handleLoad.bind(this);
     this.resolveHandleLoad = this.resolveHandleLoad.bind(this);
     this.handleLoadReject = this.handleLoadReject.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.handleChange = this.handleChange.bind(this);
 
     this.state = {
-      componentLoaded: false
+      componentLoaded: false,
+      input: ''
     };
   }
 
@@ -27,7 +30,7 @@ export class WeatherComponent extends Component {
 
     if(!loaded) {
       this.handleLoad([
-        requestForecastOnClient('paris')
+        requestForecastOnClient()
       ]);
     }
 
@@ -71,12 +74,26 @@ export class WeatherComponent extends Component {
     });
   }
 
+  handleClick() {
+    const {
+      requestForecastOnClient,
+    } = this.props;
+
+    console.log(this.state.input);
+    requestForecastOnClient(this.state.input);
+  }
+
+  handleChange(e) {
+    this.setState({ input: e.target.value });
+  }
+
   render() {
 
     const {
       componentLoaded,
       error
-    } = this.state;
+    } = this.state;     console.log(this.state);
+
 
     const {
       forecast,
@@ -85,6 +102,17 @@ export class WeatherComponent extends Component {
 
     return (
       <span>WeatherComponent
+
+
+
+        <div>Enter the city name
+        <input type="text" onChange={this.handleChange} />
+        <input
+          type="button"
+          value="Search"
+          onClick={this.handleClick}
+        />
+      </div>
 
         {componentLoaded && !error &&
           <div>
@@ -116,7 +144,7 @@ export class WeatherComponent extends Component {
 }
 
 WeatherComponent.propTypes = {
-  // forecast: PropTypes.object.isRequired
+  forecast: PropTypes.object.isRequired
 };
 
 export default WeatherComponent;

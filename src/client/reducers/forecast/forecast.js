@@ -13,7 +13,7 @@ export const getErrorMessage = ({ forecast }) => {
   return (forecast.errorMessage) ? forecast.errorMessage : null;
 };
 
-export  default (state = [], action = {}) => {
+export  default (state = {}, action = {}) => {
   switch (action.type) {
 
     case actionTypes.SET_FORECAST_ACTION:

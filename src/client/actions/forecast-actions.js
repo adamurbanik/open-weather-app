@@ -16,7 +16,7 @@ export const requestForecast = (cityName = 'london') => {
   return dispatch => {
 
     return restClient.get(`${config.OPEN_WEATHER_MAP_HOST}/data/2.5/weather?q=${cityName}&appid=${config.APPID}`)
-      .then(({ body }) => {
+      .then(({ body }) => { console.log('body',body)
 
         dispatch(setForecast(body));
         return Promise.resolve(body);
