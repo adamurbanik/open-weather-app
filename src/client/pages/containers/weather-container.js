@@ -15,8 +15,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    requestForecastOnClient() {
-      return dispatch(requestForecastOnClient())
+    requestForecastOnClient(cityName) {
+      return dispatch(requestForecastOnClient(cityName))
     }
   }
 };

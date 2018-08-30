@@ -15,7 +15,7 @@ export const errorFetchingForecast = err => ({
 export const requestForecast = (cityName = 'london') => {
   return dispatch => {
 
-    return restClient.get(`${config.OPEN_WEATHER_MAP_HOST}/data/2.5/weather?q=London&appid=${config.APPID}`)
+    return restClient.get(`${config.OPEN_WEATHER_MAP_HOST}/data/2.5/weather?q=${cityName}&appid=${config.APPID}`)
       .then(({ body }) => {
 
         dispatch(setForecast(body));
@@ -33,8 +33,7 @@ export const requestForecast = (cityName = 'london') => {
 export const requestForecastOnClient  = (cityName = 'london') => {
   return dispatch => {
 
-    // return restClient.get('http://localhost:8080/weather/forecast/client')
-    return restClient.get(`${config.SERVER_PROTOCOL}${config.LOCALHOST}:${config.SERVER_PORT}/weather/forecast/client`)
+    return restClient.get(`${config.SERVER_PROTOCOL}${config.LOCALHOST}:${config.SERVER_PORT}/weather/forecast/client?cityName=${cityName}`)
       .then(({ body }) => {
 
         dispatch(setForecast(body));

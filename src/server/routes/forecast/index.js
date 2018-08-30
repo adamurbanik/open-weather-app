@@ -10,7 +10,11 @@ export default () => {
 
   routes.get('/client', (req, res, next) => {
 
-    return restClient.get(`${config.OPEN_WEATHER_MAP_HOST}/data/2.5/weather?q=London&appid=${config.APPID}`)
+    const {
+      cityName
+    } = req.query;
+
+    return restClient.get(`${config.OPEN_WEATHER_MAP_HOST}/data/2.5/weather?q=${cityName}&appid=${config.APPID}`)
       .then(({ body }) => res.send(body))
       .catch(err => next(err));
   });

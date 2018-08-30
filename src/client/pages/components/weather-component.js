@@ -27,7 +27,7 @@ export class WeatherComponent extends Component {
 
     if(!loaded) {
       this.handleLoad([
-        requestForecastOnClient()
+        requestForecastOnClient('paris')
       ]);
     }
 
