@@ -8,21 +8,40 @@ export const setForecast = data => ({
 });
 
 export const errorFetchingForecast = err => ({
-  type: actionTypes.ERROR_FETCHING_FORECAST
+  type: actionTypes.ERROR_FETCHING_FORECAST_ACTION
 });
 
 export const requestForecast = (cityName = 'london') => {
   return dispatch => {
 
-    return restClient.get(`${config.OPEN_WEATHER_MAP_HOST}/data/2.5/weather?q=${cityName}&appid=${config.APPID}`)
-      .then(({ body }) => dispatch(setForecast(body)))
+    return restClient.get(`samples.openweathermap.org/data/2.5/weather?q=London,uk&appid=b6907d289e10d714a6e88b30761fae22`)
+      .then(({ body }) => { console.log('server side render', body);
+
+        dispatch(setForecast(body));
+        return Promise.resolve(body);
+      })
       .catch(err => {
 
-        const error = "REQUEST_FORECAST_ERROR";
-
+        const error = "ERROR_FETCHING_FORECAST_ACTION";
         dispatch(errorFetchingForecast(error));
-
         return Promise.reject();
       });
+  }
+};
+
+export const requestForecastOnClient  = (cityName = 'london') => {
+  return dispatch => {
+
+    return restClient.get('http://localhost:8080/weather/forecast/client')
+      .then(({ body }) => {
+
+        dispatch(setForecast(body));
+        return Promise.resolve();
+      })
+      .catch(err => {
+        console.log('err', err)
+        dispatch(errorFetchingForecast(err));
+      });
+
   }
 };

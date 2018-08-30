@@ -50,7 +50,8 @@ const universalLoader = (routeMarkup, asyncContext, req, res) => {
       });
 
       res.send(html);
-    });
+    })
+      .catch((err) => res.send(err));
   });
 };
 

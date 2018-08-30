@@ -26,8 +26,6 @@ const get = (url, additionalHeaders = []) => {
       ...additionalHeaders
     ]);
 
-    req.timeout(30000);
-
     req.end((err, res) => {
       if (err) {
         reject(err);

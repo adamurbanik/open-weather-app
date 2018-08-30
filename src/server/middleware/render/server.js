@@ -12,7 +12,7 @@ import WeatherContainer from 'client/pages/containers/weather-container';
 import { requestForecast } from 'client/actions/forecast-actions';
 
 export const resolve = (title, store, history, req, res, next) => {
-  try {
+  try { console.log('resolve is coming');
     const asyncContext = createAsyncContext();
 
     const routeMarkup = (

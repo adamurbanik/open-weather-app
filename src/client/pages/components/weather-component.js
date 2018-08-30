@@ -1,7 +1,8 @@
+import { get } from 'lodash';
+
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import errorMessage from 'client/pages/error';
-
 export class WeatherComponent extends Component {
 
   constructor(props) {
@@ -10,52 +11,73 @@ export class WeatherComponent extends Component {
     this.populateHtmlWithData = this.populateHtmlWithData.bind(this);
 
     this.handleLoad = this.handleLoad.bind(this);
-    this.handleLoadResolve = this.handleLoadResolve.bind(this);
-    this.handleLoadReject = this.handleLoadReject.bind(this);
+
+    this.state = {
+      componentLoaded: false
+    };
   }
 
   componentWillMount() {
 
     const {
       requestForecastOnClient,
+      loaded,
       forecast
-    } = this.props;
+    } = this.props; console.log('loaded prop', loaded);
 
-    console.log('forecast', forecast);
+    if(!loaded) { console.log('going to handle load');
+      this.handleLoad([
+        requestForecastOnClient()
+      ]);
+    }
 
-    // this.handleLoad([
-    //   requestForecastOnClient()
-    // ]);
-
-    if (forecast) {
-      this.display = this.populateHtmlWithData(forecast);
+    if(loaded) { console.log('loaded', loaded);
+      this.populateHtmlWithData(forecast);
+      this.setState({
+        componentLoaded: true
+      });
     }
   }
 
-  handleLoad(promises = [], handleLoadRejectCb) {
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log('shouldComponentUpdate');
+    console.log('nextProps', nextProps);
+
+
+    const {
+      forecast
+    } = nextProps;
+
+    let loaded = get(forecast, 'loaded', ''); console.log('loaded::', loaded);
+
+    if (loaded) {
+      this.populateHtmlWithData(forecast)
+      return true;
+    }
+
+    return false;
+  }
+
+
+  handleLoad(promises = []) {
     return Promise.all(promises)
-      .then(this.handleLoadResolve, (handleLoadRejectCb && (() => {
-        return handleLoadRejectCb()
-          .then(this.handleLoadResolve, this.handleLoadReject);
-      }) || this.handleLoadReject));
+      .then((res) => {
+        this.setState({
+          componentLoaded: true
+        });
+      })
+      .catch(() => Promise.reject());
   }
 
-  handleLoadResolve(data) {
-    this.setState({
-      loading: false
-    });
+  // handleLoadReject() {
+  //   this.setState({
+  //     loading: false,
+  //     error: errorMessage()
+  //   });
+  // }
 
-    return data;
-  }
+  populateHtmlWithData({ data }) { console.log('populateHtmlWithData data', data);
 
-  handleLoadReject() {
-    this.setState({
-      loading: false,
-      error: errorMessage()
-    });
-  }
-
-  populateHtmlWithData(forecast) {
     const {
       weather,
       main,
@@ -64,7 +86,9 @@ export class WeatherComponent extends Component {
       clouds,
       sys,
       name
-    } = forecast;
+    } = data;
+
+    this.name = name;
 
     this.description = weather.map(item => <h3>weather description: {item.description}</h3>);
     this.pressure = <h3>pressure: {main.pressure}</h3>;
@@ -80,28 +104,35 @@ export class WeatherComponent extends Component {
   }
 
   render() {
+
+    const {
+      componentLoaded
+    } = this.state; console.log('componentLoaded', componentLoaded);
+
     const {
       forecast,
-      loading
+      loaded,
+      data
     } = this.props;
+
+    let weather = get(forecast, 'data.weather', null);
 
     return (
       <span>WeatherComponent
 
-        {forecast &&
+        {componentLoaded &&
+          <div>
+            WeatherComponent
+          </div>
+        }
+
+
+        {componentLoaded &&
         <section>
-          {this.description}
-          {this.pressure}
-          {this.humidity}
-          {this.temp_min}
-          {this.temp_max}
-          {this.visibility}
-          {this.wind}
-          {this.clouds}
-          {this.sunrise}
-          {this.sunset}
-          {this.cityName}
-        </section>}
+          this.pressure = <h3>pressure: pressure</h3>
+          city name: {this.name}
+        </section>
+        }
 
       </span>
 
@@ -110,7 +141,22 @@ export class WeatherComponent extends Component {
 }
 
 WeatherComponent.propTypes = {
-  forecast: PropTypes.object.isRequired
+  // forecast: PropTypes.object.isRequired
 };
 
 export default WeatherComponent;
+
+
+  {/*${loaded}*/}
+  {/*${data}*/}
+  {/*{this.description}*/}
+  {/*{this.pressure}*/}
+  {/*{this.humidity}*/}
+  {/*{this.temp_min}*/}
+  {/*{this.temp_max}*/}
+  {/*{this.visibility}*/}
+  {/*{this.wind}*/}
+  {/*{this.clouds}*/}
+  {/*{this.sunrise}*/}
+  {/*{this.sunset}*/}
+  {/*{this.cityName}*/}
