@@ -17,8 +17,10 @@ Search Pressure to get the average pressure for the next five days for default o
 
 There is more work to be done to handle errors and display error component.
 
-There are two routes on the server side
+There are two routes on the server side:
+
 /weather/forecast = to return forecast
+
 /weather/pressure?cityName=warsaw - to return average pressure
 
 example: http://localhost:8080/weather/forecast
