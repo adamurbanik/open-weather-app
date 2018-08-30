@@ -1,15 +1,21 @@
 import restClient from 'shared/lib/rest-client';
+import config from 'server/config';
 
-export const headers = [
-  { name: 'Accept', value: 'application/json' }
-];
+export default () => (req, res, next) => {
 
-const get = () => (req, res, next) => {
-  return restClient.get(`api.openweathermap.org/data/2.5/weather?q=london&appid=1bb6656597dfa7e018bf0e81d8c60ffd`, headers)
-    .then(response => res.json(response.body))
-    .catch(err => next(err));
+  const {
+    cityName
+  } = req.query;
+
+  return restClient.get(`${config.OPEN_WEATHER_MAP_HOST}/data/2.5/forecast?q=${cityName}&appid=${config.APPID}`)
+    .then(({ body }) => {
+
+      req.locals = body;
+      next();
+    })
+    .catch(err => {
+
+      console.error(err);
+      next(err);
+    })
 };
-
-export default {
-  get
-}

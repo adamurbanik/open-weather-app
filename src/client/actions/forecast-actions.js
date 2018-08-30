@@ -30,7 +30,7 @@ export const requestForecast = (cityName = 'london') => {
   }
 };
 
-export const requestForecastOnClient  = (cityName = 'london') => {
+export const requestForecastOnClient  = (cityName = 'london') => { console.log('cityName', cityName);
   return dispatch => {
 
     return restClient.get(`${config.SERVER_PROTOCOL}${config.LOCALHOST}:${config.SERVER_PORT}/weather/forecast/client?cityName=${cityName}`)
@@ -41,11 +41,9 @@ export const requestForecastOnClient  = (cityName = 'london') => {
       })
       .catch(err => {
 
-        console.error(err);
         let errorMessage = 'error occured while getting forecast data';
         dispatch(errorFetchingForecast(errorMessage));
         return Promise.reject();
       });
-
   }
 };

@@ -16,7 +16,11 @@ export default () => {
 
     return restClient.get(`${config.OPEN_WEATHER_MAP_HOST}/data/2.5/weather?q=${cityName}&appid=${config.APPID}`)
       .then(({ body }) => res.send(body))
-      .catch(err => next(err));
+      .catch(err => {
+
+        console.error(err);
+        next(err);
+      })
   });
 
   routes.use(renderOnServer('forecast'));

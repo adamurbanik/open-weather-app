@@ -3,6 +3,7 @@ import { get } from 'lodash';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ErrorComponent from 'client/pages/error';
+
 export class WeatherComponent extends Component {
 
   constructor(props) {
@@ -13,6 +14,7 @@ export class WeatherComponent extends Component {
     this.handleLoadReject = this.handleLoadReject.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.getPressure = this.getPressure.bind(this);
 
     this.state = {
       componentLoaded: false,
@@ -75,6 +77,13 @@ export class WeatherComponent extends Component {
   }
 
   handleClick() {
+
+    const {
+      input
+    } = this.state;
+
+    if (!input) { return false }
+
     const {
       requestForecastOnClient,
     } = this.props;
@@ -86,6 +95,22 @@ export class WeatherComponent extends Component {
     this.setState({ input: e.target.value });
   }
 
+  getPressure() {
+
+    const {
+      input
+    } = this.state;
+
+    if (!input) { return false }
+
+    const {
+      requestPressure
+    } = this.props;
+
+    requestPressure(this.state.input)
+      .then(this.resolveHandleLoad);
+  }
+
   render() {
 
     const {
@@ -93,23 +118,24 @@ export class WeatherComponent extends Component {
       error
     } = this.state;
 
-
     const {
       forecast,
-      errorMessage
+      errorMessage,
+      pressureAverage
     } = this.props;
+
+    let pressure = get(pressureAverage, 'data.average', false);
 
     return (
       <span>WeatherComponent
 
-
-
         <div>Enter the city name
-        <input type="text" onChange={this.handleChange} />
-        <input
-          type="button"
-          value="Search"
-          onClick={this.handleClick}
+        <input type="text"
+               onChange={this.handleChange}
+        />
+        <input type="button"
+               value="Search"
+               onClick={this.handleClick}
         />
       </div>
 
@@ -128,6 +154,17 @@ export class WeatherComponent extends Component {
             <p>sunset: {forecast.data.sys.sunset }</p>
           </div>
         }
+
+        <input
+          type="button"
+          value="Search Pressure"
+          onClick={this.getPressure}
+        />
+
+        {pressureAverage &&
+          <div>Pressure average for next five days is: {pressure}</div>
+        }
+
 
         {componentLoaded && error &&
           <ErrorComponent

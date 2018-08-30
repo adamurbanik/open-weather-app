@@ -1,5 +1,4 @@
 import actionTypes from 'client/utils/action-types';
-import errorMessage from 'client/pages/error';
 
 export const getForecast = (state = {}) => {
   return (state.forecast) ? state.forecast : {};
