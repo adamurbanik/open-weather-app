@@ -4,7 +4,7 @@ import createHistory from 'history/createBrowserHistory';
 import thunk from 'redux-thunk';
 import { routerMiddleware } from 'react-router-redux';
 
-import reducers from './reducers/index';
+import reducers from './reducers';
 
 const createAppStore = (path = '/') => {
   const initialState = {};

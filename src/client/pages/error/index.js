@@ -1,11 +1,18 @@
 import React from 'react';
 
-export default () => {
+export default (props) => {
+
+  const {
+    error
+  } = props;
 
   return (
-    <p className="">
-      Sorry, we are experiencing technical difficulties. Please try again later.
-    </p>
-  );
+    <span>
+      <h4 className="">
+        Sorry, we are experiencing technical difficulties. Please try again later.
+      </h4>
+      <p>{error}</p>
+    </span>
 
+  );
 }

@@ -8,22 +8,42 @@ export const setForecast = data => ({
 });
 
 export const errorFetchingForecast = err => ({
-  type: actionTypes.ERROR_FETCHING_FORECAST
+  type: actionTypes.ERROR_FETCHING_FORECAST_ACTION,
+  error: err
 });
 
-export default (cityName = 'london') => {
+export const requestForecast = (cityName = 'london') => {
   return dispatch => {
 
     return restClient.get(`${config.OPEN_WEATHER_MAP_HOST}/data/2.5/weather?q=${cityName}&appid=${config.APPID}`)
-      .then(({ body }) => dispatch(setForecast(body)))
+      .then(({ body }) => {
+
+        dispatch(setForecast(body));
+        return Promise.resolve(body);
+      })
       .catch(err => {
 
-        const error = "REQUEST_FORECAST_ERROR";
+        console.error(err);
+        dispatch(errorFetchingForecast(err));
+        return Promise.reject(err);
+      });
+  }
+};
 
-        dispatch(errorFetchingForecast(error));
+export const requestForecastOnClient  = (cityName = 'london') => { console.log('cityName', cityName);
+  return dispatch => {
 
+    return restClient.get(`${config.SERVER_PROTOCOL}${config.LOCALHOST}:${config.SERVER_PORT}/weather/forecast/client?cityName=${cityName}`)
+      .then(({ body }) => {
+
+        dispatch(setForecast(body));
+        return Promise.resolve();
+      })
+      .catch(err => {
+
+        let errorMessage = 'error occured while getting forecast data';
+        dispatch(errorFetchingForecast(errorMessage));
         return Promise.reject();
       });
-
   }
-}
+};
