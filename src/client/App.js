@@ -13,7 +13,7 @@ const Page1 = asyncComponent({
 let App = (props) => (
   <BrowserRouter>
   <div>
-    <Route exact path="/weather/forecast" component={Page1} />
+    <Route exact path="" component={Page1} />
   </div>
   </BrowserRouter>
 );
