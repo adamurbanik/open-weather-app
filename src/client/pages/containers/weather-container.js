@@ -2,15 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import WeatherComponent from 'client/pages/components/weather-component';
-import { getForecast, getLoadingForecastState } from 'client/reducers/forecast/forecast';
-import { requestForecastOnClient, getIfForecastLoading } from 'client/actions/forecast-actions';
+import { getForecast, getLoadingForecastState, getErrorMessage } from 'client/reducers/forecast/forecast';
+import { requestForecastOnClient } from 'client/actions/forecast-actions';
 
 const mapStateToProps = (state) => {
   return ({
     forecast: getForecast(state),
-    loaded: getLoadingForecastState(state)
+    loaded: getLoadingForecastState(state),
+    errorMessage: getErrorMessage(state)
   });
-
 };
 
 const mapDispatchToProps = (dispatch) => {

@@ -9,6 +9,10 @@ export const getLoadingForecastState = ({ forecast }) => {
   return (forecast.loaded) ? true : false;
 };
 
+export const getErrorMessage = (state) => { console.log('state error', state);
+  return state;
+};
+
 export  default (state = [], action = {}) => {
   switch (action.type) {
 
@@ -25,8 +29,7 @@ export  default (state = [], action = {}) => {
 
     case actionTypes.ERROR_FETCHING_FORECAST_ACTION:
       return {
-        loaded: false,
-        error: errorMessage(action.error)
+        errorMessage: action.error
       };
 
     default:

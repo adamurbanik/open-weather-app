@@ -32,6 +32,7 @@ export const resolve = (title, store, history, req, res, next) => {
 const locateResource = (title, req, res, next) => {
   const { store, history } = createAppStore(req.path);
 
+  console.log('server licate resource');
   store
     .dispatch(requestForecast())
     .then(() => resolve(title, store, history, req, res, next))

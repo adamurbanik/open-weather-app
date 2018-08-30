@@ -8,7 +8,8 @@ export const setForecast = data => ({
 });
 
 export const errorFetchingForecast = err => ({
-  type: actionTypes.ERROR_FETCHING_FORECAST_ACTION
+  type: actionTypes.ERROR_FETCHING_FORECAST_ACTION,
+  error: err
 });
 
 export const requestForecast = (cityName = 'london') => {
@@ -33,14 +34,16 @@ export const requestForecastOnClient  = (cityName = 'london') => {
   return dispatch => {
 
     return restClient.get('http://localhost:8080/weather/forecast/client')
-      .then(({ body }) => {
+      .then(({ body }) => { console.log('body client side', body);
 
         dispatch(setForecast(body));
         return Promise.resolve();
       })
       .catch(err => {
-        console.log('err', err)
-        dispatch(errorFetchingForecast(err));
+
+        let errorMessage = 'error occured while getting forecast data';
+        dispatch(errorFetchingForecast(errorMessage));
+        return Promise.reject();
       });
 
   }
