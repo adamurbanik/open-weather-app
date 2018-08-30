@@ -79,7 +79,6 @@ export class WeatherComponent extends Component {
       requestForecastOnClient,
     } = this.props;
 
-    console.log(this.state.input);
     requestForecastOnClient(this.state.input);
   }
 
@@ -92,7 +91,7 @@ export class WeatherComponent extends Component {
     const {
       componentLoaded,
       error
-    } = this.state;     console.log(this.state);
+    } = this.state;
 
 
     const {
