@@ -12,7 +12,7 @@ import WeatherContainer from 'client/pages/containers/weather-container';
 import { requestForecast } from 'client/actions/forecast-actions';
 
 export const resolve = (title, store, history, req, res, next) => {
-  try { console.log('resolve is coming');
+  try {
     const asyncContext = createAsyncContext();
 
     const routeMarkup = (
@@ -32,7 +32,6 @@ export const resolve = (title, store, history, req, res, next) => {
 const locateResource = (title, req, res, next) => {
   const { store, history } = createAppStore(req.path);
 
-  console.log('server licate resource');
   store
     .dispatch(requestForecast())
     .then(() => resolve(title, store, history, req, res, next))

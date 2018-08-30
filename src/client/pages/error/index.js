@@ -4,7 +4,7 @@ export default (props) => {
 
   const {
     error
-  } = props; console.log('error props', error);
+  } = props;
 
   return (
     <span>

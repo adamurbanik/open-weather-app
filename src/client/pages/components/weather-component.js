@@ -22,6 +22,7 @@ export class WeatherComponent extends Component {
     const {
       requestForecastOnClient,
       loaded,
+      errorMessage
     } = this.props;
 
     if(!loaded) {
@@ -30,8 +31,12 @@ export class WeatherComponent extends Component {
       ]);
     }
 
-    if(loaded) {
+    if(loaded && !errorMessage) {
       this.resolveHandleLoad();
+    }
+
+    if(loaded && errorMessage) {
+      this.handleLoadReject();
     }
   }
 
@@ -41,7 +46,7 @@ export class WeatherComponent extends Component {
       forecast
     } = nextProps;
 
-    let loaded = get(forecast, 'loaded', false)
+    let loaded = get(forecast, 'loaded', false);
     let errorMessage = get(forecast, 'errorMessage', false);
 
     return (loaded || errorMessage) ? true : false;

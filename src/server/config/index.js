@@ -1,5 +1,5 @@
 export default {
-  SERVER_PROTOCOL: 'http',
+  SERVER_PROTOCOL: 'http://',
   LOCALHOST: 'localhost',
   SERVER_PORT: 8080,
   OPEN_WEATHER_MAP_HOST: 'api.openweathermap.org',

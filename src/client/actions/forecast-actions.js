@@ -15,17 +15,17 @@ export const errorFetchingForecast = err => ({
 export const requestForecast = (cityName = 'london') => {
   return dispatch => {
 
-    return restClient.get(`samples.openweathermap.org/data/2.5/weather?q=London,uk&appid=b6907d289e10d714a6e88b30761fae22`)
-      .then(({ body }) => { console.log('server side render', body);
+    return restClient.get(`${config.OPEN_WEATHER_MAP_HOST}/data/2.5/weather?q=London&appid=${config.APPID}`)
+      .then(({ body }) => {
 
         dispatch(setForecast(body));
         return Promise.resolve(body);
       })
       .catch(err => {
 
-        const error = "ERROR_FETCHING_FORECAST_ACTION";
-        dispatch(errorFetchingForecast(error));
-        return Promise.reject();
+        console.error(err);
+        dispatch(errorFetchingForecast(err));
+        return Promise.reject(err);
       });
   }
 };
@@ -33,14 +33,16 @@ export const requestForecast = (cityName = 'london') => {
 export const requestForecastOnClient  = (cityName = 'london') => {
   return dispatch => {
 
-    return restClient.get('http://localhost:8080/weather/forecast/client')
-      .then(({ body }) => { console.log('body client side', body);
+    // return restClient.get('http://localhost:8080/weather/forecast/client')
+    return restClient.get(`${config.SERVER_PROTOCOL}${config.LOCALHOST}:${config.SERVER_PORT}/weather/forecast/client`)
+      .then(({ body }) => {
 
         dispatch(setForecast(body));
         return Promise.resolve();
       })
       .catch(err => {
 
+        console.error(err);
         let errorMessage = 'error occured while getting forecast data';
         dispatch(errorFetchingForecast(errorMessage));
         return Promise.reject();
